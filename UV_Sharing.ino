@@ -2,16 +2,16 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 
-// WiFi Credentials
-#define WIFI_SSID "JioFi3_58D5AB"
-#define WIFI_PASSWORD "syzzkk5k63"
 
-// Firebase
-#define API_KEY "AIzaSyAzt5PHO4iBPiG4o4hu3tdAXhZhya6oSVY"
-#define FIREBASE_PROJECT_ID "weather-station-lstm"
-#define FIRESTORE_COLLECTION "uv-sensor" // Firestore collection name
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
 
-// UV Sensor Analog Pin
+
+#define API_KEY ""
+#define FIREBASE_PROJECT_ID ""
+#define FIRESTORE_COLLECTION "" 
+
+
 #define UV_SENSOR_PIN 34 // GPIO34 (ADC1_6)
 
 void setup() {
@@ -32,7 +32,7 @@ void sendToFirestore(float uvIntensity, int rawValue, float voltage) {
         String url = "https://firestore.googleapis.com/v1/projects/" + String(FIREBASE_PROJECT_ID) + 
                      "/databases/(default)/documents/" + String(FIRESTORE_COLLECTION) + "?key=" + String(API_KEY);
 
-        // JSON Payload
+        
         DynamicJsonDocument doc(512);
         doc["fields"]["uv_intensity"]["doubleValue"] = uvIntensity;
         doc["fields"]["uv_voltage"]["doubleValue"] = voltage;
@@ -62,12 +62,12 @@ void sendToFirestore(float uvIntensity, int rawValue, float voltage) {
 
 void loop() {
     int uvRaw = analogRead(UV_SENSOR_PIN);
-    float uvVoltage = uvRaw * (3.3 / 4095.0);  // ESP32 uses 3.3V ADC reference
-    float uvIntensity = uvVoltage / 0.1;       // Approx conversion for GUVA-S12SD
+    float uvVoltage = uvRaw * (3.3 / 4095.0);  
+    float uvIntensity = uvVoltage / 0.1;      
 
     Serial.printf("UV Raw: %d | Voltage: %.2f V | Intensity: %.2f mW/cm²\n", uvRaw, uvVoltage, uvIntensity);
 
     sendToFirestore(uvIntensity, uvRaw, uvVoltage);
 
-    delay(5000); // Send every 5 seconds
+    delay(5000); 
 }
