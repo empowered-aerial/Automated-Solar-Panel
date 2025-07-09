@@ -12,7 +12,7 @@
 #define FIRESTORE_COLLECTION "" 
 
 
-#define UV_SENSOR_PIN 34 // GPIO34 (ADC1_6)
+#define UV_SENSOR_PIN 34
 
 void setup() {
     Serial.begin(115200);
