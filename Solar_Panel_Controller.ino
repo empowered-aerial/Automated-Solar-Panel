@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-// Servo instances
+
 Servo horizontal;
 Servo vertical;
 
@@ -12,7 +12,7 @@ const int horizontalLimitLow = 0;
 const int verticalLimitHigh = 180;
 const int verticalLimitLow = 0;
 
-// LDR pins
+
 const int ldrTopLeft = A0;
 const int ldrTopRight = A3;
 const int ldrBottomLeft = A1;
